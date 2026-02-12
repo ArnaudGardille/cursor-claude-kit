@@ -27,6 +27,7 @@ Instead:
 - Validate improvements on:
   - A small dev set (fast iteration)
   - A held-out set (generalization)
+- If stochastic, run multi-trial (3–5 runs) and report variance before concluding pass/fail.
 - Only add examples to few-shot if:
   - The example represents a recurring failure class, AND
   - It improves held-out performance (not just the single case).

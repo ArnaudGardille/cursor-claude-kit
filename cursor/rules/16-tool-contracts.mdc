@@ -1,0 +1,30 @@
+---
+description: "Tool description, schema, return value, and error discipline for AI agents."
+globs:
+  - "**/tools/**"
+  - "**/*tool*.*"
+  - "**/*_tool.py"
+  - "**/*Tool.ts"
+---
+
+# Tool contracts (agent tools)
+
+Treat tool definitions as first-class prompt engineering. Clear boundaries and returns prevent whole classes of agent failures.
+
+## Description
+- State what the tool **does** and what it **does not** do (boundary clarity).
+- When the interface is non-obvious, include at least one example call and the expected return shape.
+- Document edge cases and input format requirements; distinguish this tool from similar ones.
+
+## Schema
+- Every parameter has a type, description, and constraints (no ambiguous or untyped fields).
+- Prefer absolute identifiers over relative ones (e.g. absolute paths over relative) to reduce misuse.
+- Make arguments hard to misuse (poka-yoke): clear names, enums over free text where appropriate.
+
+## Returns
+- Tool returns must include **actionable context** the agent can reason over (not just `"ok"` or raw status codes).
+- Return enough information for the agent to decide the next step or report meaningfully to the user.
+
+## Errors
+- Tool errors must be **structured and meaningful** for the agent: category, message, and suggested recovery when possible.
+- Do not surface raw tracebacks; map internal failures to agent-friendly error payloads.

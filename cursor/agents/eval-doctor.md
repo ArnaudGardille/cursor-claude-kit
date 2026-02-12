@@ -64,7 +64,7 @@ Apply fixes in this order unless evidence strongly suggests otherwise:
 ## 6) Validate generalization (non-negotiable)
 - Run on dev set (fast iteration).
 - Run on held-out set (generalization proof).
-- Repeat trials if stochastic.
+- If stochastic, run multi-trial (3–5 runs) and report variance before concluding pass/fail.
 - Summarize: deltas overall + per-failure-class + worst regressions.
 
 ## 7) Forbidden “fixes”

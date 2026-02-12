@@ -1,0 +1,25 @@
+---
+description: "Tracing and structured logging for agent runs (LLM calls, tool calls, correlation)."
+globs:
+  - "**/agents/**"
+  - "**/*agent*.*"
+  - "**/*pipeline*.*"
+  - "**/*chain*.*"
+---
+
+# Observability (agent execution)
+
+Traces are required to debug, evaluate, and improve agent behavior. No trace means no diagnosis.
+
+## Per-step tracing
+- **LLM calls:** capture model, prompt (or hash), completion, tokens, latency, cost (if available).
+- **Tool calls:** log tool name, inputs, outputs, duration, and errors.
+- Use a span or step id so steps can be ordered and attributed.
+
+## Correlation
+- Use a correlation/trace ID (session or run ID) that links all steps of a single agent run.
+- Propagate it through the full execution so logs and traces can be filtered by run.
+
+## Logging
+- Use structured logging (JSON or equivalent); no bare `print()` for agent execution data.
+- Redact sensitive data (API keys, PII) before logging; never log full prompts or responses that contain secrets.

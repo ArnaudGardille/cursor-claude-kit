@@ -1,0 +1,25 @@
+---
+description: "Prompt versioning, anti-bloat, and eval-linked changes for agent prompts."
+globs:
+  - "**/*prompt*.*"
+  - "**/*system*.*"
+  - "**/templates/**"
+  - "**/*instructions*.*"
+---
+
+# Prompt discipline (agent prompts)
+
+Prompts are versioned artifacts. Fight bloat and contradictions; tie changes to measurable impact.
+
+## Versioning
+- Tag meaningful prompt changes with a version comment or changelog entry.
+- So you can correlate "prompt v2" with metric deltas and regressions.
+
+## Anti-bloat
+- New instructions must **replace or consolidate** existing ones; no unbounded growth.
+- Keep prompt structure clear: use delimiters/sections; avoid contradictory instructions across sections.
+- Avoid embedding large static data in prompts; prefer retrieval or tool-based context injection.
+
+## Eval-linked changes
+- If a prompt change targets eval improvement, report before/after metrics on a small eval slice before merging.
+- Use evals to measure prompt performance as you iterate.
