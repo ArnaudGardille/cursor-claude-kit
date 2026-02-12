@@ -66,6 +66,7 @@ We do not “fix” by stuffing the failing case into a prompt and calling it ge
 ### Cursor
 ```
 .cursor/
+  AGENTS.md
   rules/
     00-safety.mdc
     10-quality.mdc
@@ -73,6 +74,8 @@ We do not “fix” by stuffing the failing case into a prompt and calling it ge
   agents/
     verifier.md
     eval-doctor.md
+  skills/
+    lint_mypy_fix.md
 ```
 
 ### Claude Code

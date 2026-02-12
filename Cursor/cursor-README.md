@@ -13,6 +13,7 @@ This folder contains Cursor rules and subagents designed to keep changes:
 - `20-evals.mdc`: only for agent/eval-related work (scoped via globs).
 - `verifier.md`: skeptical validation before declaring “done”.
 - `eval-doctor.md`: root-cause analysis + generalization for eval failures.
+- `lint_mypy_fix.md`: iterative lint/mypy fix loop (skill).
 
 ## Notes
 - Rules are scoped via `.mdc` frontmatter so they don’t bloat every context.
