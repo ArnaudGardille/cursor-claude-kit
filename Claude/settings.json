@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "rules": [
+      {
+        "type": "deny",
+        "tool": "Bash",
+        "match": "(?i)\\b(rm\\s+-rf\\b|drop\\s+table\\b|truncate\\b|delete\\s+from\\b|kubectl\\s+delete\\b|terraform\\s+destroy\\b)\\b"
+      },
+      {
+        "type": "ask",
+        "tool": "Bash",
+        "match": "(?i)\\b(migrate|migration|alembic\\b|prisma\\s+migrate\\b|flyway\\b|liquibase\\b|deploy\\b|release\\b)\\b"
+      },
+      {
+        "type": "ask",
+        "tool": "Bash",
+        "match": "(?i)\\b(production|prod)\\b"
+      },
+      {
+        "type": "allow",
+        "tool": "Bash",
+        "match": "(?i)\\b(pytest\\b|ruff\\b|mypy\\b|python\\s+-m\\b)\\b"
+      },
+      {
+        "type": "allow",
+        "tool": "Read"
+      },
+      {
+        "type": "allow",
+        "tool": "Grep"
+      },
+      {
+        "type": "allow",
+        "tool": "Glob"
+      }
+    ]
+  }
+}

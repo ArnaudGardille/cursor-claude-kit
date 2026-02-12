@@ -1,0 +1,18 @@
+---
+description: "Non-negotiable safety constraints (especially around destructive operations)."
+globs: "**/*"
+---
+
+# Safety (always on)
+
+## Non-negotiables
+- Never execute destructive operations against **production** data/systems.
+- Never drop/delete/truncate collections/tables/indexes by default.
+- Never run broad cleanup scripts without an explicit target and rollback plan.
+
+## If a destructive change is explicitly required
+You must provide:
+1) Exact operations to run (commands/queries).
+2) Migration strategy (including staging validation).
+3) Rollback strategy.
+4) A clear checkpoint that asks for explicit confirmation before applying anything destructive.

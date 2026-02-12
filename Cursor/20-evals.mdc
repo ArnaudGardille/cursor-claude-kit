@@ -1,0 +1,36 @@
+---
+description: "Use only when working on agent behavior and evaluations."
+globs:
+  - "**/evals/**"
+  - "**/evaluation/**"
+  - "**/agents/**"
+  - "**/*agent*.*"
+---
+
+# Agent Evals (attach only for agent behavior work)
+
+## When an eval fails
+Do NOT default to fixing by adding the failing case to few-shot.
+
+Instead:
+1) Reproduce the failure (capture inputs, tool traces, and outputs).
+2) Categorize the likely root cause:
+   - Spec/prompt contract ambiguity
+   - Missing/incorrect context or retrieval
+   - Tool interface/schema issues
+   - Decision logic/planning policy issues
+   - Memory/state issues
+   - Agent architecture limitations
+3) Propose 1–3 hypotheses and choose the smallest general fix.
+
+## Generalization requirement
+- Validate improvements on:
+  - A small dev set (fast iteration)
+  - A held-out set (generalization)
+- Only add examples to few-shot if:
+  - The example represents a recurring failure class, AND
+  - It improves held-out performance (not just the single case).
+
+## Evidence
+- Report before/after results (metrics or concise summary across multiple cases).
+- Prefer robustness improvements that do not increase prompt bloat.
