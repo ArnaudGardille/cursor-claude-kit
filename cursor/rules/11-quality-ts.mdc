@@ -1,0 +1,27 @@
+---
+description: "Minimal diffs, error discipline, and conventions for TypeScript."
+globs: "**/*.{ts,tsx}"
+---
+
+# Code Quality & Change Discipline – TypeScript (always on)
+
+## Minimal diffs
+- Prefer the smallest change that solves the requirement.
+- No refactors unless required for the task or explicitly requested.
+- Avoid broad renames/reformatting unrelated to the request.
+
+## Keep code simple
+- Avoid one-off helper functions used only once unless they materially improve readability.
+- Avoid duplicating constants/examples/datasets; keep a single source of truth.
+- Prefer existing project utilities/patterns over inventing new ones.
+
+## Errors & validation
+- Validate inputs at boundaries (API routes, CLI entrypoints, event handlers).
+- Use typed errors or custom Error subclasses with clear messages.
+- Catch exceptions only at system boundaries to add context or map to correct responses.
+- Never swallow exceptions silently (no empty catch blocks).
+
+## Typing
+- Avoid `any`; prefer `unknown` when the type is truly unknown and narrow from there.
+- Use strict TypeScript (`strict: true` in tsconfig).
+- Prefer interfaces for object shapes; use type aliases for unions/intersections.

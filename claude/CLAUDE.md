@@ -14,6 +14,9 @@ A change is "done" only when:
 - Never drop/delete/truncate collections/tables/indexes by default.
 - If a destructive change is explicitly required: provide a migration plan + rollback plan + staging validation steps, then stop for explicit confirmation.
 
+### Destructive code must be written commented-out
+When writing code that contains destructive operations (drop, delete, truncate, insert_many, update_many, remove, destroy, purge, overwrite, seed, wipe, or any bulk mutation), **always write those lines commented-out** with a `# REVIEW:` (or `// REVIEW:` in TS/JS) marker explaining what the line does. 
+
 ## Error discipline
 - Validate inputs at boundaries (API/CLI/job entrypoints).
 - Raise typed exceptions with clear messages.

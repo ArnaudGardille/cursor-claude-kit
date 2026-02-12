@@ -4,12 +4,52 @@
       {
         "type": "deny",
         "tool": "Bash",
-        "match": "(?i)\\b(rm\\s+-rf\\b|drop\\s+table\\b|truncate\\b|delete\\s+from\\b|kubectl\\s+delete\\b|terraform\\s+destroy\\b)\\b"
+        "match": "(?i)(rm\\s+-(r|rf|fr)\\b|rm\\s+--recursive)"
+      },
+      {
+        "type": "deny",
+        "tool": "Bash",
+        "match": "(?i)\\b(drop\\s+table|drop\\s+database|drop\\s+index|drop\\s+collection)\\b"
+      },
+      {
+        "type": "deny",
+        "tool": "Bash",
+        "match": "(?i)\\b(truncate\\s+table|truncate\\s+collection|delete\\s+from)\\b"
+      },
+      {
+        "type": "deny",
+        "tool": "Bash",
+        "match": "(?i)\\b(deleteTable|deleteItem|BatchWriteItem)\\b"
+      },
+      {
+        "type": "deny",
+        "tool": "Bash",
+        "match": "(?i)(aws\\s+dynamodb\\s+delete-table|aws\\s+s3\\s+rb\\b|aws\\s+s3\\s+rm\\b)"
+      },
+      {
+        "type": "deny",
+        "tool": "Bash",
+        "match": "(?i)\\b(kubectl\\s+delete|terraform\\s+destroy)\\b"
+      },
+      {
+        "type": "deny",
+        "tool": "Bash",
+        "match": "(?i)(git\\s+push\\s+.*--force|git\\s+reset\\s+--hard|git\\s+clean\\s+-f)"
+      },
+      {
+        "type": "deny",
+        "tool": "Bash",
+        "match": "(?i)(curl\\s.*\\|\\s*(sh|bash)|wget\\s.*\\|\\s*(sh|bash))"
       },
       {
         "type": "ask",
         "tool": "Bash",
-        "match": "(?i)\\b(migrate|migration|alembic\\b|prisma\\s+migrate\\b|flyway\\b|liquibase\\b|deploy\\b|release\\b)\\b"
+        "match": "(?i)\\b(migrate|migration|alembic|prisma\\s+migrate|flyway|liquibase)\\b"
+      },
+      {
+        "type": "ask",
+        "tool": "Bash",
+        "match": "(?i)\\b(deploy|release|publish)\\b"
       },
       {
         "type": "ask",
@@ -17,9 +57,29 @@
         "match": "(?i)\\b(production|prod)\\b"
       },
       {
+        "type": "ask",
+        "tool": "Bash",
+        "match": "(?i)(docker\\s+(system\\s+prune|volume\\s+rm|image\\s+prune))"
+      },
+      {
+        "type": "ask",
+        "tool": "Bash",
+        "match": "(?i)(git\\s+push)"
+      },
+      {
         "type": "allow",
         "tool": "Bash",
-        "match": "(?i)\\b(pytest\\b|ruff\\b|mypy\\b|python\\s+-m\\b)\\b"
+        "match": "(?i)\\b(pytest|ruff|mypy|eslint|tsc|prettier|vitest|jest|npx|node|tsx|ts-node|npm\\s+(run|test|install|ci)|pnpm\\s+(run|test|install)|yarn\\s+(run|test|install)|bun\\s+(run|test|install))\\b"
+      },
+      {
+        "type": "allow",
+        "tool": "Bash",
+        "match": "(?i)\\b(python\\s+-m\\s+(pytest|ruff|mypy|pip|venv|http\\.server))\\b"
+      },
+      {
+        "type": "allow",
+        "tool": "Bash",
+        "match": "(?i)^(git\\s+(status|log|diff|branch|show|stash|fetch|pull|blame|reflog|ls-files|rev-parse)|ls|cat|head|tail|wc|find|grep|rg|which|env|echo|pwd|cd|mkdir|cp|mv|touch|chmod|source|\\.)\\b"
       },
       {
         "type": "allow",
@@ -32,6 +92,14 @@
       {
         "type": "allow",
         "tool": "Glob"
+      },
+      {
+        "type": "allow",
+        "tool": "WebSearch"
+      },
+      {
+        "type": "allow",
+        "tool": "WebFetch"
       }
     ]
   }

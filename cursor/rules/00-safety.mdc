@@ -16,3 +16,6 @@ You must provide:
 2) Migration strategy (including staging validation).
 3) Rollback strategy.
 4) A clear checkpoint that asks for explicit confirmation before applying anything destructive.
+
+## Destructive code must be written commented-out
+When writing code that contains destructive operations (drop, delete, truncate, insert_many, update_many, remove, destroy, purge, overwrite, seed, wipe, or any bulk mutation), **always write those lines commented-out** with a `# REVIEW:` (or `// REVIEW:` in TS/JS) marker explaining what the line does. 

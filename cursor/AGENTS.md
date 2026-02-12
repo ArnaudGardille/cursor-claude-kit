@@ -23,6 +23,7 @@ A change is "done" only when:
 - Never run destructive operations against production systems/data.
 - Never drop/delete/truncate collections/tables/indexes by default.
 - If a destructive change is explicitly required: produce a migration plan + rollback plan + staging validation steps, then stop for explicit confirmation.
+- **Destructive code must be written commented-out** with a `# REVIEW:` (or `// REVIEW:`) marker. Only the mutating lines (drop, delete, truncate, insert_many, update_many, seed, wipe, bulk mutations) are commented — surrounding logic is written normally. The user will review and uncomment.
 
 ## Docs
 - Do not create new docs unless requested.

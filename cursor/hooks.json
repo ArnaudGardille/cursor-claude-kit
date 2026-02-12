@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/block-destructive.sh",
+        "matcher": "rm|drop|truncate|delete|kubectl|terraform|git.*force|git.*--hard|git.*clean|curl.*sh|wget.*sh|aws.*delete|aws.*rb|BatchWriteItem|deleteTable|deleteItem"
+      }
+    ]
+  }
+}

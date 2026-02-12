@@ -1,7 +1,7 @@
 ---
 name: "Eval Doctor"
 description: "Diagnose failing agent evaluations using traces and agentic signals (tool use, task completion). Propose smallest general fix and validate on dev + held-out sets."
-model: "normal"
+model: opus
 tools: ["Read", "Grep", "Glob", "Bash"]
 permissionMode: "ask"
 maxTurns: 40

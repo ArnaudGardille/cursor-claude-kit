@@ -1,7 +1,7 @@
 ---
 name: "Verifier"
 description: "Validate completed work: minimal diff, safety hazards, and verification (lint/typecheck/tests). Produces a structured PASS/FAIL verdict."
-model: "fast"
+model: sonnet
 tools: ["Read", "Grep", "Glob", "Bash"]
 permissionMode: "ask"
 maxTurns: 20
