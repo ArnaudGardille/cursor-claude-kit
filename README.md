@@ -225,7 +225,7 @@ From the root of any project:
 
 ```bash
 mkdir -p .claude
-cp "$KIT/claude/CLAUDE.md"     CLAUDE.md
+cp "$KIT/claude/CLAUDE.md"     .claude/CLAUDE.md
 ln -s "$KIT/claude/settings.json" .claude/settings.json
 ln -s "$KIT/claude/agents"        .claude/agents
 ln -s "$KIT/claude/skills"        .claude/skills
