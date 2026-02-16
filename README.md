@@ -193,56 +193,60 @@ Docs: [Cursor Hooks](https://cursor.com/docs/agent/hooks), [Claude Permissions](
 
 Instead of copying, symlink so every project points to a single source of truth. Updates to this repo propagate everywhere automatically.
 
-Set `KIT` to wherever you cloned this repo:
+**Layout:** Clone this repo as a sibling of your project (e.g. both under `~/projects/`). Use relative symlinks so paths are portable and safe to commit.
+
+Set `KIT_REL` to the relative path from your project root to this repo:
 
 ```bash
-KIT="$HOME/Development/cursor-claude-kit"
+KIT_REL="../cursor-claude-kit"   # when kit is sibling of your project
 ```
 
 #### Cursor — per-project symlinks
 
-From the root of any project:
+From the root of your project:
 
 ```bash
 mkdir -p .cursor
-cp "$KIT/cursor/AGENTS.md"  .cursor/AGENTS.md
-ln -s "$KIT/cursor/rules"      .cursor/rules
-ln -s "$KIT/cursor/agents"     .cursor/agents
-ln -s "$KIT/cursor/skills"     .cursor/skills
-ln -s "$KIT/cursor/hooks.json" .cursor/hooks.json
-ln -s "$KIT/cursor/hooks"      .cursor/hooks
-```
-
-Or symlink the entire directory at once:
-
-```bash
-ln -s "$KIT/cursor" .cursor
-```
-
-#### Claude Code — per-project symlinks
-
-From the root of any project:
-
-```bash
-mkdir -p .claude
-cp "$KIT/claude/CLAUDE.md"     .claude/CLAUDE.md
-ln -s "$KIT/claude/settings.json" .claude/settings.json
-ln -s "$KIT/claude/agents"        .claude/agents
-ln -s "$KIT/claude/skills"        .claude/skills
+cp "$KIT_REL/cursor/AGENTS.md"  .cursor/AGENTS.md
+ln -s "$KIT_REL/cursor/rules"      .cursor/rules
+ln -s "$KIT_REL/cursor/agents"     .cursor/agents
+ln -s "$KIT_REL/cursor/skills"     .cursor/skills
+ln -s "$KIT_REL/cursor/hooks.json" .cursor/hooks.json
+ln -s "$KIT_REL/cursor/hooks"      .cursor/hooks
 ```
 
 Or symlink the entire directory:
 
 ```bash
-ln -s "$KIT/claude" .claude
-ln -s "$KIT/claude/CLAUDE.md" CLAUDE.md
+ln -s "$KIT_REL/cursor" .cursor
+```
+
+#### Claude Code — per-project symlinks
+
+From the root of your project:
+
+```bash
+mkdir -p .claude
+cp "$KIT_REL/claude/CLAUDE.md"            .claude/CLAUDE.md
+ln -s "$KIT_REL/claude/CLAUDE.example.md" .claude/CLAUDE.example.md
+ln -s "$KIT_REL/claude/settings.json"     .claude/settings.json
+ln -s "$KIT_REL/claude/agents"            .claude/agents
+ln -s "$KIT_REL/claude/skills"            .claude/skills
+```
+
+Or symlink the entire directory:
+
+```bash
+ln -s "$KIT_REL/claude" .claude
+ln -s "$KIT_REL/claude/CLAUDE.md" CLAUDE.md
 ```
 
 #### Claude Code — global (applies to all projects)
 
-Claude Code supports a global `~/.claude/` directory. Symlink there to apply defaults everywhere without touching individual repos:
+For global use, absolute paths are fine (not committed). Set `KIT` to your clone location:
 
 ```bash
+KIT="$HOME/Development/cursor-claude-kit"
 ln -s "$KIT/claude/CLAUDE.md"     ~/.claude/CLAUDE.md
 ln -s "$KIT/claude/settings.json" ~/.claude/settings.json
 ln -s "$KIT/claude/agents"        ~/.claude/agents
@@ -251,7 +255,58 @@ ln -s "$KIT/claude/skills"        ~/.claude/skills
 
 > **Tip:** Per-project files take precedence over global ones in Claude Code, so you can still override per-repo when needed.
 
-> **Git note:** Symlinks show up as untracked files. Add them to `.gitignore` if you don't want to commit them, or commit the symlinks (git preserves symlink targets).
+> **Git note:** Relative symlinks (e.g. `../cursor-claude-kit/...`) are portable and safe to commit. Absolute symlinks are not—add `.cursor/` and `.claude/` to `.gitignore` if you use them.
+
+---
+
+## Adapting CLAUDE.md / AGENTS.md to your project
+
+The default `CLAUDE.md` and `AGENTS.md` files contain generic rules. For real leverage, you need to tailor them to **your** project — its stack, commands, architecture, and conventions.
+
+`claude/CLAUDE.example.md` shows what a thorough, project-specific `CLAUDE.md` looks like (a Kubernetes-style Go/Python/React monorepo). Use it as a reference for the level of detail to aim for.
+
+### Recommended prompt
+
+Copy-paste this prompt into Claude Code or Cursor to generate a project-aware version. Run it **from your project root** so the agent has full codebase access.
+
+> **For Claude Code (`CLAUDE.md`):**
+>
+> ```text
+> Analyze this codebase to update @.claude/CLAUDE.md and make it project-specific .
+>
+> Use @.claude/CLAUDE.example.md as a reference for structure and level of detail — but tailor every section to THIS project.
+>
+> Cover at minimum:
+> 1. Project overview (what it is, architecture, key tech)
+> 2. Development setup (prerequisites, install, build, run)
+> 3. Common commands (build, test, lint, format, migrations — whatever applies)
+> 4. Architecture deep dive (directory structure, key packages/modules, entry points)
+> 5. Key workflows (how to add a feature, endpoint, migration, etc.)
+> 6. Testing strategy (how to run tests, markers/tags, coverage)
+> 7. Important patterns (error handling, config, naming, conventions the team follows)
+> 8. Debugging tips (common issues and how to fix them)
+> 9. Environment variables reference (if applicable)
+> 10. Code style (formatters, linters, conventions)
+>
+> Be specific: include actual commands, actual file paths, actual module names.
+> Don't write generic advice — write things only true about THIS repo.
+> If you can't determine something from the code, say so rather than guessing.
+> ```
+
+> **For Cursor (`AGENTS.md`):**
+>
+> ```text
+> Analyze this codebase and generate a project-specific .cursor/AGENTS.md.
+>
+> Use @.claude/CLAUDE.example.md as a reference for the level of detail, but adapt the format for Cursor's AGENTS.md conventions.
+>
+> Cover the same ground: project overview, setup, commands, architecture, workflows, testing, patterns, debugging, and code style.
+>
+> Be specific to THIS project — actual commands, actual paths, actual conventions.
+> Don't write generic advice. If you can't determine something, say so.
+> ```
+
+> **Tip:** After generating, review the output and remove anything the agent guessed wrong. A smaller, accurate file beats a large, half-wrong one.
 
 ---
 
