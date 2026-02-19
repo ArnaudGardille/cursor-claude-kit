@@ -19,6 +19,9 @@ A change is "done" only when:
 - Unit tests: `pytest -q`
 - Integration tests: `pytest -q tests/integration`
 
+## Documentation lookup
+When you need up-to-date docs for a library or framework, use Context7 MCP (`resolve-library-id` → `query-docs`) instead of relying on training data that may be stale.
+
 ## Safety
 - Never run destructive operations against production systems/data.
 - Never drop/delete/truncate collections/tables/indexes by default.

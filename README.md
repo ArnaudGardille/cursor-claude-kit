@@ -1,4 +1,4 @@
-# Cursor & Claude Code development kit
+# Cursor, Claude Code & Codex development kit
 
 This repo is a set of **defaults** for building LLM agents that don't behave like reckless interns with `rm -rf` access.
 
@@ -44,6 +44,7 @@ Not "should pass." Not "looks correct." Run the checks.
 
 - Cursor hooks
 - Claude Code permissions (deny / ask / allow)
+- Codex approval modes (suggest / auto-edit)
 
 ### 4) Evals drive agent improvement
 
@@ -54,8 +55,12 @@ We do not "fix" by stuffing the failing case into a prompt and calling it genera
 
 ## Supported tooling
 
-- **Cursor**: Rules + subagents (+ hooks for enforcement)Docs: [Rules](https://cursor.com/docs/context/rules), [Subagents](https://cursor.com/docs/context/subagents), [Skills](https://cursor.com/docs/context/skills), [Hooks](https://cursor.com/docs/agent/hooks)
-- **Claude Code**: `CLAUDE.md` + permissions + subagents + skillsDocs: [Overview](https://code.claude.com/docs/en/overview), [Sub-agents](https://code.claude.com/docs/en/sub-agents), [Permissions](https://code.claude.com/docs/en/permissions), [Skills](https://code.claude.com/docs/en/skills)
+- **Cursor**: Rules + subagents (+ hooks for enforcement)
+  Docs: [Rules](https://cursor.com/docs/context/rules), [Subagents](https://cursor.com/docs/context/subagents), [Skills](https://cursor.com/docs/context/skills), [Hooks](https://cursor.com/docs/agent/hooks)
+- **Claude Code**: `CLAUDE.md` + permissions + subagents + skills
+  Docs: [Overview](https://code.claude.com/docs/en/overview), [Sub-agents](https://code.claude.com/docs/en/sub-agents), [Permissions](https://code.claude.com/docs/en/permissions), [Skills](https://code.claude.com/docs/en/skills)
+- **OpenAI Codex**: `AGENTS.md` at repo root
+  Install: `npm i -g @openai/codex` · Run: `codex`
 - **Agent evaluation guidance** (for the Eval Doctor flow):
   [DeepEval agent evaluation](https://deepeval.com/guides/guides-ai-agent-evaluation)
 
@@ -95,6 +100,13 @@ claude/          → symlink or copy to .claude/
   skills/
     lint-fix/
       SKILL.md
+```
+
+### OpenAI Codex
+
+```
+codex/           → copy or symlink AGENTS.md to repo root
+  AGENTS.md      → Codex reads from repo root, not .codex/
 ```
 
 ---
@@ -160,11 +172,13 @@ Docs: [Cursor Skills](https://cursor.com/docs/context/skills), [Claude Skills](h
 
 - Cursor rules
 - `CLAUDE.md`
+- Codex `AGENTS.md`
 
 **Enforcement** lives in:
 
 - Cursor hooks (recommended for destructive command blocking)
 - Claude Code permissions (`deny` / `ask` / `allow`)
+- Codex approval modes (suggest vs auto-edit)
 
 If you only write safety policies in markdown, you haven't implemented safety. You've implemented optimism.
 
@@ -188,6 +202,11 @@ Docs: [Cursor Hooks](https://cursor.com/docs/agent/hooks), [Claude Permissions](
 1) Copy `claude/CLAUDE.md` to `CLAUDE.md` and `claude/` contents into `.claude/` in your repo.
 2) Tailor `.claude/settings.json` permission patterns to match your infra/tooling.
 3) Make "Verifier PASS" the standard before shipping.
+
+#### OpenAI Codex
+
+1) Copy `codex/AGENTS.md` to `AGENTS.md` at your repo root.
+2) Adjust commands and repo-specific paths to match your project.
 
 ### Option B: Symlink from this repo (shared across projects)
 
@@ -241,6 +260,22 @@ ln -s "$KIT_REL/claude" .claude
 ln -s "$KIT_REL/claude/CLAUDE.md" CLAUDE.md
 ```
 
+#### Codex — per-project setup
+
+From the root of your project:
+
+```bash
+cp "$KIT_REL/codex/AGENTS.md" AGENTS.md
+```
+
+Or symlink so updates propagate automatically:
+
+```bash
+ln -s "$KIT_REL/codex/AGENTS.md" AGENTS.md
+```
+
+> **Note:** Codex reads `AGENTS.md` from the **repo root**. There is no `.codex/` directory.
+
 #### Claude Code — global (applies to all projects)
 
 For global use, absolute paths are fine (not committed). Set `KIT` to your clone location:
@@ -263,11 +298,11 @@ ln -s "$KIT/claude/skills"        ~/.claude/skills
 
 The default `CLAUDE.md` and `AGENTS.md` files contain generic rules. For real leverage, you need to tailor them to **your** project — its stack, commands, architecture, and conventions.
 
-`claude/CLAUDE.example.md` shows what a thorough, project-specific `CLAUDE.md` looks like (a Kubernetes-style Go/Python/React monorepo). Use it as a reference for the level of detail to aim for.
+`claude/CLAUDE.example.md` shows what a thorough, project-specific configuration looks like (a Kubernetes-style Go/Python/React monorepo). Use it as a reference for the level of detail to aim for.
 
 ### Recommended prompt
 
-Copy-paste this prompt into Claude Code or Cursor to generate a project-aware version. Run it **from your project root** so the agent has full codebase access.
+Copy-paste this prompt into Claude Code, Cursor, or Codex to generate a project-aware version. Run it **from your project root** so the agent has full codebase access.
 
 > **For Claude Code (`CLAUDE.md`):**
 >
@@ -303,6 +338,23 @@ Copy-paste this prompt into Claude Code or Cursor to generate a project-aware ve
 > Cover the same ground: project overview, setup, commands, architecture, workflows, testing, patterns, debugging, and code style.
 >
 > Be specific to THIS project — actual commands, actual paths, actual conventions.
+> Don't write generic advice. If you can't determine something, say so.
+> ```
+
+> **For OpenAI Codex (`AGENTS.md`):**
+>
+> ```text
+> Analyze this codebase and update the AGENTS.md file at the repo root to make it project-specific for OpenAI Codex.
+>
+> Cover at minimum:
+> 1. Setup (prerequisites, install commands, env vars)
+> 2. Commands (build, test, lint, format, typecheck — whatever applies)
+> 3. Repo map (directory structure, where main code lives, where configs are)
+> 4. Definition of Done (when is a change complete)
+> 5. Safety (destructive operations policy)
+> 6. Rules (what not to edit, quality guidelines, conventions)
+>
+> Be specific to THIS project — actual commands, actual paths, actual module names.
 > Don't write generic advice. If you can't determine something, say so.
 > ```
 
