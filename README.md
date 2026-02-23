@@ -64,6 +64,10 @@ We do not "fix" by stuffing the failing case into a prompt and calling it genera
 - **Agent evaluation guidance** (for the Eval Doctor flow):
   [DeepEval agent evaluation](https://deepeval.com/guides/guides-ai-agent-evaluation)
 
+## Extra docs
+
+- [Worktrees + MCP setup (Cursor, Claude Code, Codex)](doc/worktree-mcp-playbook.md)
+
 ---
 
 ## Repo layout
