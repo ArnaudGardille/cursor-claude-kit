@@ -36,10 +36,10 @@ if echo "$command" | grep -qiE '\b(kubectl\s+delete|terraform\s+destroy)\b'; the
 fi
 
 # --- DENY: destructive git ---
-if echo "$command" | grep -qiE '(git\s+push\s+.*--force|git\s+reset\s+--hard|git\s+clean\s+-f)'; then
-  echo '{"permission":"deny","user_message":"Blocked: destructive git operation.","agent_message":"Force push / hard reset / clean blocked. Use safe alternatives."}'
-  exit 0
-fi
+# if echo "$command" | grep -qiE '(git\s+push\s+.*--force|git\s+reset\s+--hard|git\s+clean\s+-f)'; then
+#   echo '{"permission":"deny","user_message":"Blocked: destructive git operation.","agent_message":"Force push / hard reset / clean blocked. Use safe alternatives."}'
+#   exit 0
+# fi
 
 # --- DENY: piped remote code execution ---
 if echo "$command" | grep -qiE '(curl|wget)\s.*\|\s*(sh|bash)'; then

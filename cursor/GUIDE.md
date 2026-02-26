@@ -45,20 +45,32 @@ See: [Rules](https://cursor.com/docs/context/rules)
 - Error discipline (typed exceptions, boundary-only catching, no swallowed errors)
 - Packaging/resources (prefer `importlib.resources` over brittle path hacks)
 
-3) **20-evals.mdc** (manual attach or narrow scope)
+3) **12-testing.mdc** (source files: `*.py`, `*.ts`, `*.tsx`, `*.go`)
+
+- Test-first for bug fixes, new behavior, and refactors
+- Skip test-first for config changes, prototypes, trivial one-liners, UI styling
+- Test quality: independent, deterministic, parametrized
+
+4) **13-hygiene.mdc** (always on)
+
+- Dependency justification and version pinning
+- No hardcoded secrets; use env vars or secret managers
+- Interface-first design for new modules/classes/services
+
+5) **20-evals.mdc** (manual attach or narrow scope)
 
 - When evals fail: investigate root cause, don’t “just add the failing case”
 - Generalization requirement: dev set + held-out set; if stochastic, multi-trial and report variance
 
-4) **15-observability.mdc** (agent/chain code)
+6) **15-observability.mdc** (agent/chain code)
 
 - Per-step tracing for LLM and tool calls; correlation ID per run; structured logging; redact secrets
 
-5) **16-tool-contracts.mdc** (tool definitions)
+7) **16-tool-contracts.mdc** (tool definitions)
 
 - Clear "does" / "does not"; strict schema; actionable returns; structured errors (no raw tracebacks)
 
-6) **21-prompts.mdc** (prompts and templates)
+8) **21-prompts.mdc** (prompts and templates)
 
 - Version prompts; replace/merge instructions (no bloat); report before/after metrics when changing for evals
 
@@ -184,6 +196,8 @@ If you want the “minimum effective bureaucracy” setup:
 
 - `00-safety.mdc`
 - `10-quality.mdc`
+- `12-testing.mdc`
+- `13-hygiene.mdc`
 - `20-evals.mdc` (manual attach)
 - For agent work: `15-observability.mdc`, `16-tool-contracts.mdc`, `21-prompts.mdc`
 

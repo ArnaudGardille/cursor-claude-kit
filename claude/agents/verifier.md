@@ -40,6 +40,16 @@ Confirm the author ran the relevant checks:
 - `pytest -q`
 - `pytest -q tests/integration` when behavior/IO/external calls changed
 
+## 5) Testing discipline
+- Bug fix without a regression test that reproduces the original bug? FAIL.
+- New behavior (function, endpoint, command) without tests covering the new paths? FAIL.
+- Refactor without pre-existing or newly added characterization tests? FAIL.
+- Exception: config-only changes, prototypes, trivial one-liners, pure UI styling.
+
+## 6) Dependency & secrets hygiene
+- New dependency added without justification or with an unpinned version? FAIL.
+- Hardcoded secrets, API keys, or credentials in source code? FAIL.
+
 # Output contract (MUST follow this format)
 VERDICT: PASS|FAIL
 CHECKS_RUN: comma-separated list (e.g., ruff,mypy,pytest,pytest:integration) or "none"

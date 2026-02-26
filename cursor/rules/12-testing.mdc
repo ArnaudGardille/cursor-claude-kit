@@ -1,0 +1,30 @@
+---
+description: "Test-first discipline: write tests before implementation for bugs, new behavior, and refactors."
+globs:
+  - "**/*.py"
+  - "**/*.{ts,tsx}"
+  - "**/*.go"
+---
+
+# Testing discipline
+
+## Bug fixes — test first, always
+Write a failing test that reproduces the bug BEFORE writing the fix.
+The test proves the bug exists, and proves the fix works. No regression test → the bug will return.
+
+## New behavior with clear inputs/outputs
+Write the test (expected inputs → expected outputs) first, then implement until it passes.
+This applies to new functions, methods, endpoints, and CLI commands with deterministic behavior.
+
+## Refactors — lock behavior first
+Before restructuring, ensure tests cover the existing behavior. If coverage is missing, add characterization tests first, then refactor against them.
+
+## When TDD does NOT apply
+Skip test-first for: config-only changes, prototype/spike code, trivial one-liners, pure UI layout/styling, and generated files.
+Still write tests after if the code will ship.
+
+## Test quality
+- Tests must be independent — no shared mutable state between test cases.
+- Tests must be deterministic — no flaky reliance on timing, network, or random values.
+- Prefer parametrized / table-driven tests for multiple input-output cases.
+- Name tests after the behavior they verify, not the function they call.

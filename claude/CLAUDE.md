@@ -38,6 +38,19 @@ When writing code that contains destructive operations (drop, delete, truncate, 
 - Avoid duplicating constants/examples/datasets; keep a single source of truth.
 - Prefer existing project utilities/patterns over inventing new ones.
 
+## Testing discipline
+- **Bug fixes:** Write a failing test that reproduces the bug BEFORE fixing it. No regression test means the bug will return.
+- **New behavior with clear I/O:** Write the test (expected inputs/outputs) first, then implement until it passes.
+- **Refactors:** Ensure tests cover existing behavior before restructuring. Add characterization tests first if coverage is missing.
+- **Skip test-first for:** config-only changes, prototype/spike code, trivial one-liners, pure UI styling.
+- Tests must be independent, deterministic, and fast. Prefer parametrized/table-driven tests for multiple cases.
+
+## Dependency and secrets hygiene
+- Prefer stdlib or already-installed packages. New deps require justification and pinned versions.
+- No duplicate-purpose dependencies.
+- Never hardcode secrets, API keys, or credentials in source. Use env vars or secret managers.
+- Never log secrets. If a secret is accidentally committed, rotate it immediately.
+
 ## Packaging/resources (Python)
 - Prefer `importlib.resources` for package data.
 - Avoid filesystem-relative hacks like `Path(__file__).parent.parent...`.

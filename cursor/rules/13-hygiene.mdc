@@ -1,0 +1,22 @@
+---
+description: "Dependency management, secrets handling, and interface-first design."
+alwaysApply: true
+---
+
+# Hygiene
+
+## Dependencies
+- Prefer stdlib or already-installed packages. Do not add a new dependency when an existing one covers the need.
+- New dependencies require justification: what it solves and why existing deps or stdlib can't.
+- Pin versions in dependency files (`requirements.txt`, `package.json`, `go.mod`). No floating ranges for production deps.
+- No duplicate-purpose deps (e.g., two HTTP clients, two date libraries).
+
+## Secrets and credentials
+- Never hardcode secrets, API keys, tokens, or passwords in source code.
+- Use environment variables or a secret manager. Reference `.env.example` for documentation, never commit `.env`.
+- Never log secrets — redact before any logging or tracing call.
+- If a secret is accidentally committed, rotate it immediately; removing the commit is not enough.
+
+## Interface-first design
+When adding a new module, class, or service: define the type signature, interface, or protocol first, then implement.
+This forces clear contracts before code, and pairs well with test-first development.

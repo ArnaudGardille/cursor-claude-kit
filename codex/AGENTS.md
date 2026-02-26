@@ -48,6 +48,18 @@ A change is "done" only when:
 - Do not create new docs unless requested.
 - Update existing docs only when behavior or public APIs change, and keep changes minimal.
 
+## Testing discipline
+- **Bug fixes:** Write a failing test that reproduces the bug BEFORE fixing it.
+- **New behavior:** Write the test first (expected inputs → outputs), then implement until it passes.
+- **Refactors:** Ensure tests cover existing behavior before restructuring. Add characterization tests first if missing.
+- **Skip test-first for:** config-only changes, prototypes, trivial one-liners, pure UI styling.
+- Tests must be independent, deterministic, and fast. Prefer parametrized/table-driven tests.
+
+## Dependency and secrets hygiene
+- Prefer stdlib or already-installed packages. New deps need justification and pinned versions.
+- Never hardcode secrets, API keys, or credentials in source. Use env vars or secret managers.
+- Never log secrets. If accidentally committed, rotate immediately.
+
 ## Keep code simple
 - Avoid one-off helper functions used only once unless they materially improve readability.
 - Avoid duplicating constants/examples/datasets; keep a single source of truth.

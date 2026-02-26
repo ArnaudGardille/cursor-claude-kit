@@ -81,6 +81,8 @@ cursor/          → symlink or copy to .cursor/
     00-safety.mdc
     10-quality.mdc
     11-quality-ts.mdc
+    12-testing.mdc
+    13-hygiene.mdc
     20-evals.mdc
   agents/
     verifier.md
