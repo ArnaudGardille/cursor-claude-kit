@@ -1,0 +1,17 @@
+---
+description: "Use git worktrees instead of branch switching when the current branch is unrelated to the task."
+globs: "**/*"
+---
+
+# Git Worktree Awareness
+
+Before making code changes, check the current branch (`git branch --show-current`).
+
+If you are on `main`, `master`, `develop`, or a branch **unrelated** to the requested task:
+
+1. **Do not** switch branches or commit to the current branch — this disrupts the user's workspace and pollutes unrelated branches.
+2. **Resolve the target branch:** search local and remote branches for one that matches the task. If no branch exists, propose a new branch name following the repo's naming convention and confirm with the user.
+3. Create a **git worktree** for the target branch and perform all work there.
+4. Follow the `git_worktree` skill for the full procedure.
+
+This applies even when the user does not explicitly mention a branch. If you are on `main` and the user says "implement X", you still need a feature branch — find or create one via worktree.
