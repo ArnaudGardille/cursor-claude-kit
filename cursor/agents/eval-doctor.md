@@ -1,5 +1,5 @@
 ---
-name: "Eval Doctor"
+name: Eval Doctor
 description: "Diagnose failing agent evaluations using traces and agentic metrics. Propose smallest general fix and validate on dev + held-out sets."
 model: "normal"
 ---
