@@ -113,6 +113,9 @@ claude/          → symlink or copy to .claude/
 ```
 codex/           → copy or symlink AGENTS.md to repo root
   AGENTS.md      → Codex reads from repo root, not .codex/
+  skills/
+    eval-doctor/
+      SKILL.md
 ```
 
 ---
@@ -272,15 +275,19 @@ From the root of your project:
 
 ```bash
 cp "$KIT_REL/codex/AGENTS.md" AGENTS.md
+mkdir -p .codex
+ln -s "$KIT_REL/codex/skills" .codex/skills
 ```
 
 Or symlink so updates propagate automatically:
 
 ```bash
 ln -s "$KIT_REL/codex/AGENTS.md" AGENTS.md
+mkdir -p .codex
+ln -s "$KIT_REL/codex/skills" .codex/skills
 ```
 
-> **Note:** Codex reads `AGENTS.md` from the **repo root**. There is no `.codex/` directory.
+> **Note:** Codex reads `AGENTS.md` from the **repo root**. Skills go in `.codex/skills/`.
 
 #### Claude Code — global (applies to all projects)
 
