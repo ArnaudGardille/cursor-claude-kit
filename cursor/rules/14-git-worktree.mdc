@@ -12,6 +12,8 @@ If you are on `main`, `master`, `develop`, or a branch **unrelated** to the requ
 1. **Do not** switch branches or commit to the current branch — this disrupts the user's workspace and pollutes unrelated branches.
 2. **Resolve the target branch:** search local and remote branches for one that matches the task. If no branch exists, propose a new branch name following the repo's naming convention and confirm with the user.
 3. Create a **git worktree** for the target branch and perform all work there.
-4. Follow the `git_worktree` skill for the full procedure.
+4. Follow the full procedure in **`cursor/skills/git_worktree.md`**.
+
+> Claude Code agents: the equivalent skill is **`claude/skills/git-worktree/SKILL.md`** (named `git-worktree`). Use that instead — the procedure is the same but adapted for Claude Code's `cwd`-based workflow.
 
 This applies even when the user does not explicitly mention a branch. If you are on `main` and the user says "implement X", you still need a feature branch — find or create one via worktree.

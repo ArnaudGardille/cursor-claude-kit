@@ -83,12 +83,14 @@ cursor/          → symlink or copy to .cursor/
     11-quality-ts.mdc
     12-testing.mdc
     13-hygiene.mdc
+    14-git-worktree.mdc
     20-evals.mdc
   agents/
     verifier.md
     eval-doctor.md
   skills/
     lint_mypy_fix.md
+    git_worktree.md
   hooks.json
   hooks/
     block-destructive.sh
@@ -105,6 +107,8 @@ claude/          → symlink or copy to .claude/
     eval-doctor.md
   skills/
     lint-fix/
+      SKILL.md
+    git-worktree/
       SKILL.md
 ```
 

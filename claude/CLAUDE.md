@@ -79,6 +79,16 @@ Treat tool definitions as first-class prompt engineering. Clear boundaries and r
 - **Returns:** must include actionable context the agent can reason over (not just "ok" or raw status codes). Return enough info for the agent to decide the next step.
 - **Errors:** must be structured and meaningful — category, message, and suggested recovery. Do not surface raw tracebacks; map to agent-friendly error payloads.
 
+## Git worktree awareness
+Before making code changes, check the current branch (`git branch --show-current`).
+If you are on `main`, `master`, `develop`, or a branch **unrelated** to the requested task:
+1. **Do not** switch branches or commit to the current branch.
+2. **Resolve the target branch:** search local and remote branches for one that matches the task. If no branch exists, propose a new branch name following the repo's naming convention and confirm with the user.
+3. Create a **git worktree** and perform all work there.
+4. Follow the full procedure in the **`git-worktree`** skill (`claude/skills/git-worktree/SKILL.md`).
+
+This applies even when the user does not explicitly mention a branch. If you are on `main` and the user says "implement X", you still need a feature branch — find or create one via worktree.
+
 ## Commands (edit to match this repo)
 - Lint: `ruff check .`
 - Format: `ruff format .`
