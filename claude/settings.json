@@ -102,5 +102,7 @@
         "tool": "WebFetch"
       }
     ]
-  }
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "effortLevel": "high"
 }
