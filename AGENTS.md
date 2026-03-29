@@ -60,6 +60,12 @@ When changing shared policy areas, update all relevant surfaces in the same PR.
   - `codex/skills/eval-doctor/SKILL.md`
   - Relevant README sections
 
+- Shared procedural skill change (same workflow in multiple tools):
+  - `cursor/skills/<name>.md` (flat `.md` files)
+  - `claude/skills/<kebab-name>/SKILL.md`
+  - `codex/skills/<kebab-name>/SKILL.md`
+  - Relevant README sections when the repo layout or adoption paths change
+
 If parity is intentionally not preserved, document why in the PR notes.
 
 ## Definition Of Done

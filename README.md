@@ -90,8 +90,9 @@ cursor/          → symlink or copy to .cursor/
     verifier.md
     eval-doctor.md
   skills/
-    lint_mypy_fix.md
     git_worktree.md
+    infra_review.md
+    lint_mypy_fix.md
   hooks.json
   hooks/
     block-destructive.sh
@@ -115,7 +116,7 @@ claude/          → symlink or copy to .claude/
       SKILL.md
 ```
 
-> **Note:** The `infra-review` skill replaces `aws-review`. If you symlinked `claude/skills/aws-review`, repoint to `claude/skills/infra-review` (and the same for `codex/skills/` if applicable).
+> **Note:** The `infra-review` skill replaces `aws-review`. If you symlinked `claude/skills/aws-review`, repoint to `claude/skills/infra-review`; if you used `codex/skills/aws-review`, repoint to `codex/skills/infra-review`. For Cursor, use `cursor/skills/infra_review.md` (flat skills layout).
 
 ### OpenAI Codex
 
