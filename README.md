@@ -110,7 +110,11 @@ claude/          → symlink or copy to .claude/
       SKILL.md
     git-worktree/
       SKILL.md
+    infra-review/
+      SKILL.md
 ```
+
+> **Note:** The `infra-review` skill replaces `aws-review`. If you symlinked `claude/skills/aws-review`, repoint to `claude/skills/infra-review` (and the same for `codex/skills/` if applicable).
 
 ### OpenAI Codex
 
@@ -118,7 +122,17 @@ claude/          → symlink or copy to .claude/
 codex/           → copy or symlink AGENTS.md to repo root
   AGENTS.md      → Codex reads from repo root, not .codex/
   skills/
+    agentic-review/
+      SKILL.md
+    infra-review/
+      SKILL.md
+    code-review/
+      SKILL.md
     eval-doctor/
+      SKILL.md
+    git-worktree/
+      SKILL.md
+    lint-fix/
       SKILL.md
 ```
 
