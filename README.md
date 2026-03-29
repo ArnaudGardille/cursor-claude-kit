@@ -311,6 +311,20 @@ ln -s "$KIT_REL/codex/skills" .codex/skills
 
 > **Note:** Codex reads `AGENTS.md` from the **repo root**. Skills go in `.codex/skills/`.
 
+#### Codex — global skills (applies to all projects)
+
+Codex also loads skills from **`~/.codex/skills/`**. To use this kit’s skills everywhere (absolute paths; not committed), symlink each bundle from your clone:
+
+```bash
+KIT="$HOME/Development/cursor-claude-kit"
+mkdir -p "$HOME/.codex/skills"
+for s in agentic-review code-review eval-doctor git-worktree infra-review lint-fix; do
+  ln -sfn "$KIT/codex/skills/$s" "$HOME/.codex/skills/$s"
+done
+```
+
+If a name already exists as a **plain directory** (not a symlink), rename or remove it first so `ln` does not fail—for example `mv ~/.codex/skills/eval-doctor ~/.codex/skills/eval-doctor.backup`.
+
 #### Claude Code — global (applies to all projects)
 
 For global use, absolute paths are fine (not committed). Set `KIT` to your clone location:
