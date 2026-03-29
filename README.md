@@ -61,6 +61,7 @@ We do not "fix" by stuffing the failing case into a prompt and calling it genera
   Docs: [Overview](https://code.claude.com/docs/en/overview), [Sub-agents](https://code.claude.com/docs/en/sub-agents), [Permissions](https://code.claude.com/docs/en/permissions), [Skills](https://code.claude.com/docs/en/skills)
 - **OpenAI Codex**: `AGENTS.md` at repo root
   Install: `npm i -g @openai/codex` · Run: `codex`
+- **Gemini / Google AI in the IDE**: there is no single universal project filename across products. Point your workspace or custom instructions at repo-root **`AGENTS.md`**, or add a thin **`GEMINI.md`** (or equivalent) that tells the agent to read `AGENTS.md` first and only adds Gemini-specific notes.
 - **Agent evaluation guidance** (for the Eval Doctor flow):
   [DeepEval agent evaluation](https://deepeval.com/guides/guides-ai-agent-evaluation)
 
@@ -201,6 +202,8 @@ Docs: [Cursor Skills](https://cursor.com/docs/context/skills), [Claude Skills](h
 - `CLAUDE.md`
 - Codex `AGENTS.md`
 
+Those paths can be the **same file on disk** (for example symlink `CLAUDE.md` and `.cursor/AGENTS.md` to repo-root `AGENTS.md`) so you do not maintain duplicate policy text. Cursor rules and other tool-specific files still need their own paths.
+
 **Enforcement** lives in:
 
 - Cursor hooks (recommended for destructive command blocking)
@@ -323,11 +326,32 @@ ln -s "$KIT/claude/skills"        ~/.claude/skills
 
 > **Git note:** Relative symlinks (e.g. `../cursor-claude-kit/...`) are portable and safe to commit. Absolute symlinks are not—add `.cursor/` and `.claude/` to `.gitignore` if you use them.
 
+### One canonical policy file (optional, downstream repos)
+
+After you adopt the kit (copy or symlink), you can avoid editing **both** `CLAUDE.md` and `AGENTS.md` separately:
+
+- **Canonical file:** repo-root **`AGENTS.md`** is a strong default (Codex reads it; many teams point Cursor at the same content).
+- **Symlinks** (Unix/macOS; relative targets are portable and safe to commit):
+
+```bash
+# AGENTS.md is the only file you edit for shared policy
+ln -sf AGENTS.md CLAUDE.md
+mkdir -p .cursor
+ln -sf ../AGENTS.md .cursor/AGENTS.md
+mkdir -p .claude
+ln -sf ../CLAUDE.md .claude/CLAUDE.md   # optional: Claude Code also reads .claude/CLAUDE.md
+```
+
+- **Thin adapters instead of identical symlinks:** if Claude or Gemini needs extra lines (skills paths, MCP, tool-only notes), keep **`CLAUDE.md`** or **`GEMINI.md`** short: instruct the agent to **read repo-root `AGENTS.md` in full first**, then add a minimal tool-specific section. Do not duplicate long safety or testing blocks. A markdown link alone is easy for agents to skip; an explicit “read this file first” plus symlink (where possible) works better.
+- **Windows / CI:** creating symlinks may require `git config core.symlinks true`, Developer Mode, or admin rights. If symlinks are blocked, use thin real files and update them when you change `AGENTS.md`, or automate sync with a small script.
+
+**Maintainers of this kit** keep cross-tool parity by updating `cursor/rules`, `claude/CLAUDE.md`, and `codex/AGENTS.md` together when shared policy changes (see **Cross-Tool Parity Policy** in [AGENTS.md](AGENTS.md)). **Adopters** in an application repo can still collapse to **one** canonical `AGENTS.md` and symlink or stub the other entry points so day-to-day policy edits happen in one place.
+
 ---
 
 ## Adapting CLAUDE.md / AGENTS.md to your project
 
-The default `CLAUDE.md` and `AGENTS.md` files contain generic rules. For real leverage, you need to tailor them to **your** project — its stack, commands, architecture, and conventions.
+The default `CLAUDE.md` and `AGENTS.md` files contain generic rules. For real leverage, you need to tailor them to **your** project — its stack, commands, architecture, and conventions. If you use the **single canonical file** pattern above, tailor **repo-root `AGENTS.md` once** and keep `CLAUDE.md` / `.cursor/AGENTS.md` symlinked or limited to tool-specific stubs.
 
 `claude/CLAUDE.example.md` shows what a thorough, project-specific configuration looks like (a Kubernetes-style Go/Python/React monorepo). Use it as a reference for the level of detail to aim for.
 
@@ -338,7 +362,7 @@ Copy-paste this prompt into Claude Code, Cursor, or Codex to generate a project-
 > **For Claude Code (`CLAUDE.md`):**
 >
 > ```text
-> Analyze this codebase to update @.claude/CLAUDE.md and make it project-specific .
+> Analyze this codebase to update @.claude/CLAUDE.md (or repo-root @AGENTS.md if that is your canonical file and CLAUDE.md is symlinked to it) and make it project-specific .
 >
 > Use @.claude/CLAUDE.example.md as a reference for structure and level of detail — but tailor every section to THIS project.
 >
@@ -362,7 +386,7 @@ Copy-paste this prompt into Claude Code, Cursor, or Codex to generate a project-
 > **For Cursor (`AGENTS.md`):**
 >
 > ```text
-> Analyze this codebase and generate a project-specific .cursor/AGENTS.md.
+> Analyze this codebase and generate a project-specific .cursor/AGENTS.md (or repo-root AGENTS.md if that is your canonical policy file — symlink .cursor/AGENTS.md to it when possible).
 >
 > Use @.claude/CLAUDE.example.md as a reference for the level of detail, but adapt the format for Cursor's AGENTS.md conventions.
 >
